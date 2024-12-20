@@ -1,0 +1,38 @@
+{% extends 'layout/app-layout.html '%}
+
+{% block 'content' %}
+
+
+<div class="d-flex justify-content-center">
+  <h4 style="align-content: center;" class="pt-5" style="color: brown;">ADD MOVIE</h4>
+</div>
+<form  method="POST" enctype="multipart/form-data" action="{% url 'addplan' %}">
+{% csrf_token %}
+<div class="container justify-content-center" style="width:400px">
+<div class="form-group ">
+     <label  class="text-danger" for="MovieTitle "><b>Moviename:</b></label><br>
+    {{form.planname}}
+</div>
+
+<div class="form-group">
+     <label  class="text-danger" for="comment"><b>Price:</b></label>
+    {{form.price}}
+</div>
+
+<div class="form-group">
+     <label class="text-danger"for="customfile"><b>Description:</b></label>
+     {{form.description}}
+</div>
+
+<div class="form-group">
+     <label  class="text-danger justify-content-center" for="video"><b>Duration:</b></label><br>
+     {{form.duration}}
+</div>
+<!-- <div class="form-group">
+<label  class="text-danger" for="rating "><b>Rating:</b></label><br>
+<input type="number" min="0" max="5" step="any">
+</div> -->
+<button type="submit" class="btn btn-primary my-1 ml-5 ">Submit</button>
+</form>
+
+{% endblock %}

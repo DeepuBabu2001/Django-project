@@ -1,0 +1,134 @@
+{% extends 'layout/app-layout.html '%}
+
+{% block 'content' %}
+
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('https://img.freepik.com/free-photo/movie-background-collage_23-2149876023.jpg');
+            background-size: 100% 100%;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        .position{
+            margin-left: 78rem;
+        }
+    </style>
+<body>
+    <div class="container">
+        <div class="d-flex justify-content-center">
+        <form id="search-form" class=" form-inline my-5 my-lg-2">
+            <input id="search-query" class="form-control mr-lg-5 ml-lg-5 " style="width: 600px;" value="{{ query }}" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+        </div>
+        <div class="d-flex justify-content-center">
+    <button class="btn btn-primary btn-lg position  ml-lg-5"><a style="color: white;" href="{% url 'addmovie' %}">Add Movie</a></button>
+        </div>
+    <div class="container mt-3">
+        <table class="table table-bordered table-striped table-dark">
+            <thead>
+                <tr>
+                   <th class="text-center">Id</th>
+                    <th class="text-center">Moviename</th>
+                    <th class="text-center">Action</th>
+                </tr>
+            </thead>
+            {% for movie in Movie_list %}
+            <tbody id="bookmark-table-body">
+                <tr>
+                  <td class="justify-content-center text-center">{{ movie.id }}</td>
+                    <td class="justify-content-center text-center">{{ movie.moviename }}</td>
+                    <td class="text-center">
+                        <button class="btn btn-primary btn-sm" value="edit" type="submit"><a style="color: white;" href="{% url 'editmovie' movie.id %}">Edit</a></button>
+                        <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal{{ movie.id }}">Delete</button>
+                        <button class="btn btn-info btn-sm" ><a style="color: white;" href="{% url 'moviedetails' movie.id %}">View</a></button>
+                    </td>
+                </tr>
+                <div class="container">
+                  <div class="modal fade" id="deleteModal{{ movie.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel{{ movie.id }}" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <form method="POST" action="{% url 'deletemovie' movie.id %}">
+                                {% csrf_token %}
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel{{ movie.id }}">Delete</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Are you sure to delete {{ movie.moviename }}?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+            </tbody>
+          {% endfor %}
+        </table>
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center mt-4">
+                {% if Movie_list.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{Movie_list.previous_page_number}}">Previous</a>
+                </li>
+                {% endif %}
+                {% for num in Movie_list.paginator.page_range %}
+                <li class="page-item {% if Movie_list.number == num %} active{% endif %}">
+                    <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                </li>
+                {% endfor %}
+                {% if Movie_list.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ Movie_list.next_page_number }}">Next</a>
+                </li>
+                {% endif %}
+            </ul>
+    </nav>
+    </div>
+    </div>
+    <script>
+        $(document).ready(function() {
+            // AJAX search for bookmarks by title or URL
+            $('#search-form').on('submit', function(e) {
+                e.preventDefault();
+                var query = $('#search-query').val();
+                $.ajax({
+                    url: "{% url 'searchmovie' %}",
+                    data: { q: query },
+                    success: function(data) {
+                        $('#bookmark-table-body').empty();
+                        if (data.length > 0) {
+                            data.forEach(function(bookmark) {
+                                var editUrl = `/ottplatform/editmovie/${movie_list.id}/`;
+                                var deleteUrl = `/ottplatform/deletemovie/${movie_list.id}/`;
+                                var row = '<tr>'
+                                    + '<td>' + movie_list.id + '</td>'
+                                    + '<td>' + movie_list.moviename + '</td>'
+                                    + '<td>'
+                                    + '<a href="' + editUrl + '" class="btn btn-success">Edit</a> '
+                                    + '<a href="' + deleteUrl + '" class="btn btn-danger">Delete</a>'
+                                    + '</td>'
+                                    + '</tr>';
+                                $('#bookmark-table-body').append(row);
+                            });
+                        } else {
+                            $('#bookmark-table-body').append('<tr><td colspan="5">No results found.</td></tr>');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+
+    <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
+</body>
+{% endblock %}

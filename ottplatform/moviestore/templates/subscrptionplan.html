@@ -1,0 +1,60 @@
+{% extends 'layout/app-layout.html '%}
+
+{% block 'content' %}
+
+
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('https://img.freepik.com/free-photo/movie-background-collage_23-2149876023.jpg');
+            background-size: 100% 100%;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+    </style>
+<body>
+<div class="d-flex justify-content-center" style="color: blueviolet;">
+    <h2>PLANS</h2>
+</div>
+<div class="d-flex justify-content-center my-2">
+<button class="btn btn-primary btn-lg position"><a style="color: white;" href="{% url 'addplan' %}">ADD NEW PLAN</a></button>
+</div>
+<div class="container mt-3">
+    <table class="table table-bordered table-striped table-dark">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Plan Name</th>
+                <th>Price</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        {% for Plan in planlist %}
+        <tbody>
+            <tr>
+                <td>{{ Plan.id }}</td>
+                <td>{{ Plan.planname }}</td>
+                <td>{{ Plan.price }}</td>
+                <td>
+                    <button class="btn btn-primary btn-sm"><a style="color: white;" href="{% url 'planview' Plan.id %}">View</a></button>
+                    <div>
+                        {% if plans.status == 'true' %}
+                        <form action="{% url 'plantoggle' plans.pk %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Disabled</button>
+                        </form>
+                        {% else %}
+                        <form action="{% url 'plantoggle' plans.pk %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Enable</button>
+                        </form>
+                        {% endif %}
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+     {% endfor %}
+    </table>
+</div>
+{% endblock %}

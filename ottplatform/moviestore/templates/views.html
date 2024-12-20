@@ -1,0 +1,38 @@
+{% extends 'layout/app-layout.html' %}
+
+{% block 'content' %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div class="container">
+    <form method="get">
+    {% if movieview %} 
+    <div class="row mt-4">
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title text-center">{{ movieview.moviename }}</h5>
+                    <img class="card-img-top" src="{{ movieview.thumpnail }}" alt="Card image cap" type="image">
+                    <p class="card-text">{{ movieview.description }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                  <video width="500" height="440" controls>
+                    <source src="{{ movieview.video }}" type="video">
+                    Your browser does not support the video tag.
+                </video>
+                    <div class="text-center">
+                        <a href="{% url 'moviestore' %}">Back</a>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <a href="#" class="btn btn-primary">PLAY</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+  </form>
+</div>
+{% endblock %}

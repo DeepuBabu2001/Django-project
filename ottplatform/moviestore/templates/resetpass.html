@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #c1f4e9;
+        }
+        .login-container {
+            background: #e1c98d;
+            padding: 100px;
+            border-radius: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2 class="text-center">RESET PASSWORD</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group" style="width: 400px;">
+                <label for="pwd">New Password:</label>
+                <input type="password" class="form-control" id="Password" placeholder="New Password" name="password" required>
+            </div>
+            <div class="form-group">
+                <label for="cnfrmpwd">Confrim Password:</label>
+                <input type="password" class="form-control" id="pwd" placeholder="Confrim Password" name="pswd" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+            <a href="{% url 'adminlogin'%}"><button type="button" class="btn btn-primary">Login</button></a>
+            {% if message %}
+            <div>
+                <p>{{message.status}}</p>
+            </div>
+            {% endif %}
+        </form>
+    </div>
+</body>
+</html

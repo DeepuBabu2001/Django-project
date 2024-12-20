@@ -1,0 +1,46 @@
+{% extends 'layout/app-layout.html '%}
+
+{% block 'content' %}
+
+
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('https://img.freepik.com/free-photo/movie-background-collage_23-2149876023.jpg');
+            background-size: 100% 100%;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+    </style>
+<body>
+<div class="d-flex justify-content-center mt-5" style="color: blueviolet;">
+    <h2>MOST VIEWED</h2>
+</div>
+<div class="container mt-5 text-center">
+    <table class="table table-bordered table-striped table-dark">
+        <thead>
+            <tr>
+                <th><h4 style="color: rgb(42, 165, 124);">Most Viewed Film</h4></th>
+                <th><h4 style="color: rgb(42, 165, 124);">Count</h4></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Avengers-secret-wars</td>
+                <td>30000</td>
+            </tr>
+            <tr>
+                <td>Harry Potter</td>
+                <td>16500</td>
+            </tr>
+            <tr>
+                <td>Batman</td>
+                <td>14500</td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+{% endblock %}
+

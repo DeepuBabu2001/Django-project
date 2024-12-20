@@ -1,0 +1,24 @@
+{% extends 'layout/app-layout.html' %}
+
+{% block 'content' %}
+
+
+    <div class="d-flex justify-content-center my-5">
+        <div class="card shadow-lg" style="width: 20rem;">
+            <div class="card-body">
+                <h4 class="card-title text-center font-weight-bold">LOGOUT</h4>
+                <p class="card-text text-center">Are you sure you want logout? If you want Click logout</p>
+                <hr>
+                <form method="POST">
+                  {% csrf_token %}
+                <div class="text-center">
+                    <button class="btn btn-primary mt-3" type="submit">Logout</button>
+                </div>
+                </form>
+                <div class="text-center">
+                    <a href="{% url 'moviestore'%}">Back</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

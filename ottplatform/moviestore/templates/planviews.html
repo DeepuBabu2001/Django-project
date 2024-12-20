@@ -1,0 +1,43 @@
+{% extends 'layout/app-layout.html' %}
+
+{% block 'content' %}
+
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('https://img.freepik.com/free-photo/movie-background-collage_23-2149876023.jpg');
+            background-size: 100% 100%;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        .position{
+            margin-left: 78rem;
+        }
+    </style>
+<head>
+  <body>
+    
+  
+<div class="container mt-5">
+    <h2 class="text-center mb-4 text-danger"><b>PLAN DETAILS</b></h2>
+    <form method="get">
+        {% if planview %}
+    <div class="d-flex justify-content-center my-5">
+        <div class="card shadow-lg" style="width: 20rem;">
+            <div class="card-body">
+                <h4 class="card-title text-center font-weight-bold">{{ planview.planname }}</h4>
+                <h3 class="card-subtitle mb-2 text-center text-primary">₹{{ planview.price }}</h3>
+                <p class="card-text text-center">{{ planview.description }}</p>
+                <div class="text-center">
+                    <a href="{% url 'subplan'%}">Back</a>
+                </div>
+                <div class="text-center">
+                    <a href="#" class="btn btn-primary mt-3">Subscribe Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</form>
+</div>
+{% endblock %}
